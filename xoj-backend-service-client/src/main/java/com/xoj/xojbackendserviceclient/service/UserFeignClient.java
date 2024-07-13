@@ -23,7 +23,7 @@ import static com.xoj.xojbackendcommon.constant.UserConstant.USER_LOGIN_STATE;
  * @author 29923
  */
 @FeignClient(name = "xoj-backend-user-service", path = "/api/user/inner")
-public interface UserOpenFeign {
+public interface UserFeignClient {
 
     /**
      * 根据 id 获取用户

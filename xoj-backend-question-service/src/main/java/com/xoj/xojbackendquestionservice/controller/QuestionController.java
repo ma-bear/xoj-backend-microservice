@@ -21,7 +21,7 @@ import com.xoj.xojbackendmodel.model.vo.QuestionSubmitVO;
 import com.xoj.xojbackendmodel.model.vo.QuestionVO;
 import com.xoj.xojbackendquestionservice.service.QuestionService;
 import com.xoj.xojbackendquestionservice.service.QuestionSubmitService;
-import com.xoj.xojbackendserviceclient.service.UserOpenFeign;
+import com.xoj.xojbackendserviceclient.service.UserFeignClient;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.web.bind.annotation.*;
@@ -31,10 +31,8 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 /**
- * 帖子接口
+ * 题目接口
  *
- * @author <a href="https://github.com/liyupi">程序员鱼皮</a>
- * @from <a href="https://yupi.icu">编程导航知识星球</a>
  */
 @RestController
 @RequestMapping("/")
@@ -45,7 +43,7 @@ public class QuestionController {
     private QuestionService questionService;
 
     @Resource
-    private UserOpenFeign userOpenFeign;
+    private UserFeignClient userOpenFeign;
     @Resource
     private QuestionSubmitService questionSubmitService;
 

@@ -1,7 +1,7 @@
 package com.xoj.xojbackenduserservice.controller.inner;
 
 import com.xoj.xojbackendmodel.model.entity.User;
-import com.xoj.xojbackendserviceclient.service.UserOpenFeign;
+import com.xoj.xojbackendserviceclient.service.UserFeignClient;
 import com.xoj.xojbackenduserservice.service.UserService;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,7 +19,7 @@ import java.util.List;
  */
 @RestController
 @RequestMapping("/inner")
-public class UserInnerController implements UserOpenFeign {
+public class UserInnerController implements UserFeignClient {
 
     @Resource
     private UserService userService;

@@ -4,7 +4,7 @@ import com.xoj.xojbackendmodel.model.entity.Question;
 import com.xoj.xojbackendmodel.model.entity.QuestionSubmit;
 import com.xoj.xojbackendquestionservice.service.QuestionService;
 import com.xoj.xojbackendquestionservice.service.QuestionSubmitService;
-import com.xoj.xojbackendserviceclient.service.QuestionOpenFeign;
+import com.xoj.xojbackendserviceclient.service.QuestionFeignClient;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -15,7 +15,7 @@ import javax.annotation.Resource;
  */
 @RestController
 @RequestMapping("/inner")
-public class questionInnerController implements QuestionOpenFeign {
+public class questionInnerController implements QuestionFeignClient {
 
     @Resource
     private QuestionService questionService;
@@ -34,10 +34,16 @@ public class questionInnerController implements QuestionOpenFeign {
         return questionSubmitService.getById(questionSubmitId);
     }
 
-    @Override
     @PostMapping("/question_submit/update")
-    public boolean updateQuestionSubmitById(@RequestParam("questionSubmit") QuestionSubmit questionSubmit){
+    @Override
+    public boolean updateQuestionSubmitById(@RequestBody QuestionSubmit questionSubmit){
         return questionSubmitService.updateById(questionSubmit);
+    }
+
+    @PostMapping("/question/update")
+    @Override
+    public boolean updateById(@RequestBody Question question) {
+        return questionService.updateById(question);
     }
 
 }

@@ -2,7 +2,7 @@ package com.xoj.xojbackendjudgeservice.controller.inner;
 
 import com.xoj.xojbackendjudgeservice.judge.JudgeService;
 import com.xoj.xojbackendmodel.model.entity.QuestionSubmit;
-import com.xoj.xojbackendserviceclient.service.JudgeOpenFeign;
+import com.xoj.xojbackendserviceclient.service.JudgeFeignClient;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -16,7 +16,7 @@ import javax.annotation.Resource;
  */
 @RestController
 @RequestMapping("/inner")
-public class JudgeInnerController implements JudgeOpenFeign {
+public class JudgeInnerController implements JudgeFeignClient {
     @Resource
     private JudgeService judgeService;
     /**

@@ -19,7 +19,7 @@ import com.xoj.xojbackendquestionservice.mapper.QuestionSubmitMapper;
 import com.xoj.xojbackendquestionservice.rabbitmq.MyMessageProducer;
 import com.xoj.xojbackendquestionservice.service.QuestionService;
 import com.xoj.xojbackendquestionservice.service.QuestionSubmitService;
-import com.xoj.xojbackendserviceclient.service.UserOpenFeign;
+import com.xoj.xojbackendserviceclient.service.UserFeignClient;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.ObjectUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -42,12 +42,12 @@ public class QuestionSubmitServiceImpl extends ServiceImpl<QuestionSubmitMapper,
     @Resource
     private QuestionService questionService;
     @Resource
-    private UserOpenFeign userOpenFeign;
+    private UserFeignClient userFeignClient;
     @Resource
     private MyMessageProducer myMessageProducer;
 
     /**
-     * 点赞
+     * 题目提交
      *
      * @param questionSubmitAddRequest
      * @param loginUser
@@ -90,6 +90,14 @@ public class QuestionSubmitServiceImpl extends ServiceImpl<QuestionSubmitMapper,
 //        CompletableFuture.runAsync(() -> {
 //            judgeService.doJudge(questionSubmitId);
 //        });
+        // 提交数+1
+        Integer submitNum = question.getSubmitNum();
+        submitNum++;
+        question.setSubmitNum(submitNum);
+        boolean b = questionService.updateById(question);
+        if (!b){
+            throw new BusinessException(ErrorCode.SYSTEM_ERROR,"题目提交数更新失败");
+        }
         return questionSubmitId;
     }
 
@@ -122,7 +130,7 @@ public class QuestionSubmitServiceImpl extends ServiceImpl<QuestionSubmitMapper,
         QuestionSubmitVO questionSubmitVO = QuestionSubmitVO.objToVo(questionSubmit);
         //脱敏： 仅本人和管理员能看见自己（提交 userId 和登录用户 id 不同）提交的代码
         long userId = loginUser.getId();
-        if (userId != questionSubmit.getUserId() && !userOpenFeign.isAdmin(loginUser)) {
+        if (userId != questionSubmit.getUserId() && !userFeignClient.isAdmin(loginUser)) {
             questionSubmitVO.setCode(null);
         }
         return questionSubmitVO;

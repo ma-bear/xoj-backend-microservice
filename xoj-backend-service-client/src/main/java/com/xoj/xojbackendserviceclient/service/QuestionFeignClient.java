@@ -6,6 +6,7 @@ import com.xoj.xojbackendmodel.model.entity.QuestionSubmit;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 
 
@@ -15,7 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 * @createDate 2024-02-24 13:21:27
 */
 @FeignClient(name = "xoj-backend-question-service", path = "/api/question/inner")
-public interface QuestionOpenFeign {
+public interface QuestionFeignClient {
 
     @GetMapping("/get/id")
     Question getQuestionById(@RequestParam("questionId") long questionId);
@@ -24,5 +25,8 @@ public interface QuestionOpenFeign {
     QuestionSubmit getQuestionSubmitById(@RequestParam("questionSubmitId") long questionSubmitId);
 
     @PostMapping("/question_submit/update")
-    boolean updateQuestionSubmitById(@RequestParam("questionSubmit") QuestionSubmit questionSubmit);
+    boolean updateQuestionSubmitById(@RequestBody QuestionSubmit questionSubmit);
+
+    @PostMapping("/question/update")
+    boolean updateById(@RequestBody Question question);
 }

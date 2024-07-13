@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestParam;
  * @create 2024/4/1 16:46
  */
 @FeignClient(name = "xoj-backend-judge-service", path = "/api/judge/inner")
-public interface JudgeOpenFeign {
+public interface JudgeFeignClient {
 
      /**
       * 判题
